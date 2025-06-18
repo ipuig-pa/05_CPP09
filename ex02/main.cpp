@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:25:24 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/06/18 15:21:57 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:51:15 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,27 @@ int main(int ac, char **av)
 	{
 		if (ac < 2)
 			throw std::runtime_error("Error: incorrect number of arguments.");
+
 		PmergeMe	pmrg;
-		std::cout << "pmergemevector to be called" << std::endl;
 		pmrg.PmergeMeVector(ac, av);
-		// std::cout << "Before: " << pmrg.printNum() << std::endl;
-		// std::cout << "After: " << pmrg.printNum() << std::endl;
+		// pmrg.PmergeMeList(ac, av);
+
+		//print initial int
+		std::cout << "Before: ";
+		for (int i = 1; i < ac - 1; ++i)
+		{
+			std::cout << av[i] << ", ";
+		}
+		std::cout << av[ac - 1] << std::endl;
+	
+		//print sorted int
+		std::cout << "After: ";
+		pmrg.printVec();
+
+		//print time with vector
 	// 	std::cout << "Time to process a range of " << ac - 1 << "elements with std::vector : " << pmrg.getVectorTime() << std::endl;
-	// 	std::cout << "Time to process a range of " << ac - 1 << "elements with std::deque : " << pmrg.getDequeTime() << std::endl;
+		//print time with list
+	// 	std::cout << "Time to process a range of " << ac - 1 << "elements with std::list : " << pmrg.getListTime() << std::endl;
 	}
 	catch (const std::exception &e)
 	{

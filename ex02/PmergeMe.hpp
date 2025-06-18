@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:25:11 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/06/18 15:28:05 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:57:40 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,21 @@ class PmergeMe
 private:
 	std::vector<int>	_vec;
 	std::list<int>		_list;
+	int					_JacobSeq[2];
+	//include time for vec and for list
 
 	//utils
 	int		_checkValidNum(std::string arg);
 	int		_findNextJacobsthal(void);
 
 	//vector
-	bool	_checkSorted(const std::vector<int> &vec);
-	void	_parseVector(std::vector<int> &vec, int ac, char **av);
-	void	_sortVector(std::vector<int> &vec);
-	void	_createSortedPairs(std::vector<int> &vec, std::vector<std::pair<int, int>> &pairVec);
-	void	_createMainChain(std::vector<int> &mainChain, std::vector<std::pair<int, int>> &pairVec);
-	void	_binaryInsert(std::vector<int> &mainChain, std::vector<std::pair<int, int>> &pairVec);
-	void	_binarySearch(std::vector<int> &mainChain, int val, size_t start, size_t end);
+	void	_v_parse(std::vector<int> &vec, int ac, char **av);
+	bool	_v_checkSorted(const std::vector<int> &vec);
+	void	_v_sort(std::vector<int> &vec);
+	void	_v_createSortedPairs(std::vector<int> &vec, std::vector<std::pair<int, int>> &pairVec);
+	void	_v_createMainChain(std::vector<int> &mainChain, std::vector<std::pair<int, int>> &pairVec);
+	void	_v_binaryInsert(std::vector<int> &mainChain, std::vector<std::pair<int, int>> &pairVec);
+	void	_v_binarySearch(std::vector<int> &mainChain, int val, size_t start, size_t end);
 
 	//list
 
@@ -52,7 +54,9 @@ public:
 	// void	PmergeMeList(int ac, char** av);
 
 	//utils
-	void	printNum(std::vector<int> &vec);
+	void	printTempVec(std::vector<int> &vec);
+	void	printVec();
+	void	resetJacob();
 
 	//exceptions
 	class NonPositiveException : public std::exception{
