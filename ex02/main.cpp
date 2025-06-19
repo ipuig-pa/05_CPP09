@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:25:24 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/06/19 16:02:35 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:22:56 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ int main(int ac, char **av)
 			throw std::runtime_error("Error: incorrect number of arguments.");
 
 		PmergeMe	pmrg;
-		std::cout << "--------------------------------- PMERGE ME VECTOR ---------------------------------" << std::endl << std::endl;
 		pmrg.PmergeMeVector(ac, av);
-
-		std::cout << std::endl << "--------------------------------- PMERGE ME LIST ---------------------------------" << std::endl << std::endl;
 		pmrg.PmergeMeList(ac, av);
 
 		//print initial int

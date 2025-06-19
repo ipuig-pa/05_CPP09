@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:25:11 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/06/19 14:22:06 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:22:27 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ public:
 	void	PmergeMeList(int ac, char** av);
 
 	//utils
-	void	printTempVec(std::vector<int> &vec);
-	void	printTempList(std::list<int> &list);
 	void	printVec();
 	void	resetJacob();
 	double	getVecTime();
