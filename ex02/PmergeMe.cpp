@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:25:14 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/06/18 16:34:06 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:27:42 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,31 +96,45 @@ void	PmergeMe::_v_sort(std::vector<int> &vec)
 		std::cout << pairVec[i].second << ", ";
 	std::cout << std::endl;
 
-	//creating main chain with bigger elements of each pair
-	std::vector<int> mainChain;
-	mainChain.reserve(vec.size());
-	_v_createMainChain(mainChain, pairVec);
-	printTempVec(mainChain);
+	//creating "A chain" with bigger elements of each pair
+	std::cout << "creating A chain" << std::endl;
+	std::vector<int> aChain;
+	aChain.reserve(vec.size() / 2);
+	_v_createAChain(aChain, pairVec);
+	printTempVec(aChain);
 
-	//sroting main chain with the bigger elements of each pair (recursion)
-	_v_sort(mainChain);
-	printTempVec(mainChain);
+	//sroting "A chain" with the bigger elements of each pair (recursion)
+	_v_sort(aChain);
+	printTempVec(aChain);
 
-	//adding smallest element of first pair into the main chain
-	// auto it = std::find(pairVec.begin(), pairVec.end(), mainChain[0]);
-	// 	_v_binarySearch(mainChain, pairVec[index].first, 0, it - mainChain.begin());
-	std::cout << "adding to main chain: " << pairVec[0].first << std::endl;
-	mainChain.emplace(mainChain.begin(), pairVec[0].first); //ERROR!!! not pair[0] but pair of the first element once sorted
+	//creating "B chain", witht the smallest elements of each pair in the specific order
+	std::cout << "creating B chain" << std::endl;
+	std::vector<int> bChain;
+	if (vec.size() % 2 != 0)
+	{
+		bChain.reserve((vec.size() / 2) + 1);
+		std::cout << "capacity: " << bChain.capacity();
+		std::cout << "size: " << bChain.size();
+		bChain.push_back(vec[vec.size() - 1]);
+	}
+	else
+		bChain.reserve(vec.size() / 2);
+	std::cout << "creating b chain: " << std::endl;
+	_v_createBChain(bChain, aChain, pairVec);
+	std::cout << "capacity: " << bChain.capacity();
+	std::cout << "size: " << bChain.size();
+	printTempVec(bChain);
+
+	//create main chain in original vector
+	_v_createMainChain(aChain, bChain, vec);
 
 	//insert smallest elements of each pair into the main chain
-	_v_binaryInsert(mainChain, pairVec);
-	if (vec.size() % 2 != 0)
-		_v_binarySearch(mainChain, vec[vec.size() - 1], 0, mainChain.end() - mainChain.begin());
-	printTempVec(mainChain); // move to main, call it somehow
+	_v_binaryInsert(aChain, bChain, vec);
+	printTempVec(vec); // move to main, call it somehow
+
 	std::cout << "one round of sorting FINISHED" << std::endl;
-	if (!_v_checkSorted(mainChain))
+	if (!_v_checkSorted(vec))
 		throw std::runtime_error("Error: algorithm did not work");
-	vec = mainChain;
 }
 
 void	PmergeMe::_v_createSortedPairs(std::vector<int> &vec, std::vector<std::pair<int, int>> &pairVec)
@@ -131,34 +145,67 @@ void	PmergeMe::_v_createSortedPairs(std::vector<int> &vec, std::vector<std::pair
 	}
 }
 
-void	PmergeMe::_v_createMainChain(std::vector<int> &mainChain, std::vector<std::pair<int, int>> &pairVec)
+void	PmergeMe::_v_createAChain(std::vector<int> &aChain, std::vector<std::pair<int, int>> &pairVec)
 {
 	for (size_t i = 0; i < pairVec.size(); ++i)
 	{
-		mainChain.push_back(pairVec[i].second);
+		aChain.push_back(pairVec[i].second);
 		std::cout << "adding to main chain: " << pairVec[i].second << std::endl;
 	}
-	printTempVec(mainChain);
+	printTempVec(aChain);
 }
 
-void	PmergeMe::_v_binaryInsert(std::vector<int> &mainChain, std::vector<std::pair<int, int>> &pairVec)
+void	PmergeMe::_v_createBChain(std::vector<int> &bChain, std::vector<int> &aChain, std::vector<std::pair<int, int>> &pairVec)
+{
+	for (size_t i = 0; i < aChain.size(); ++i)
+	{
+		for (size_t j = 0; j < pairVec.size(); ++j)
+		{
+			if (aChain[i] == pairVec[j].second)
+			{
+				bChain.emplace(bChain.begin() + i, pairVec[j].first);
+				pairVec[j] = {0, 0};
+			}
+		}
+	}
+}
+
+void	PmergeMe::_v_createMainChain(std::vector<int> &aChain, std::vector<int> &bChain, std::vector<int> &mainChain)
+{
+	//adding smallest element of first pair into the main chain
+	std::cout << "adding to main chain: " << bChain[0] << std::endl;
+	mainChain[0] = bChain[0];
+
+	//adding sorted biggest elements of each pair into the main chain
+	for (size_t i = 0; i < aChain.size(); ++i)
+	{
+		mainChain[i + 1] = aChain[i];
+	}
+	for (size_t i = aChain.size() ; i < mainChain.size(); ++i)
+	{
+		mainChain.erase(mainChain.begin() + aChain.size() + 1, mainChain.end()); 
+	}
+}
+
+void	PmergeMe::_v_binaryInsert(std::vector<int> &aChain, std::vector<int> &bChain, std::vector<int> &mainChain)
 {
 	std::cout << "binary insertion" << std::endl;
 	size_t index;
-	while (mainChain.size() != mainChain.capacity() && mainChain.size() != mainChain.capacity() - 1)
+	while (_JacobSeq[1] < static_cast<int> (bChain.size() + 1))
 	{
+		std::cout << "main chain size: " << mainChain.size() << " Main chain capacity: " << mainChain.capacity() << std::endl;
 		printTempVec(mainChain);
 		index = _findNextJacobsthal() - 1;
-		if (index > (mainChain.size() / 2))
-			index = mainChain.size() / 2;
+		if (index > bChain.size() - 1)
+			index = bChain.size() - 1;
 		std::cout << "index added: " << index << std::endl;
-		auto it = std::find(mainChain.begin(), mainChain.end(), pairVec[index].second);
-		_v_binarySearch(mainChain, pairVec[index].first, 0, it - mainChain.begin());
+		auto it = std::find(mainChain.begin(), mainChain.end(), aChain[index]);
+		_v_binarySearch(mainChain, bChain[index], 0, it - mainChain.begin());
 		for (int i = index - 1; i > _JacobSeq[0] - 1; i--)
 		{
 			std::cout << "index added: " << i << std::endl;
-			auto it = std::find(mainChain.begin(), mainChain.end(), pairVec[i].second);
-			_v_binarySearch(mainChain, pairVec[i].first, 0, it - mainChain.begin());
+			auto it = std::find(mainChain.begin(), mainChain.end(), aChain[i]);
+			_v_binarySearch(mainChain, bChain[i], 0, it - mainChain.begin());
 		}
 	}
 }

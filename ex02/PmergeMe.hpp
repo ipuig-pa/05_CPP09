@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:25:11 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/06/18 15:57:40 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:52:47 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ private:
 	bool	_v_checkSorted(const std::vector<int> &vec);
 	void	_v_sort(std::vector<int> &vec);
 	void	_v_createSortedPairs(std::vector<int> &vec, std::vector<std::pair<int, int>> &pairVec);
-	void	_v_createMainChain(std::vector<int> &mainChain, std::vector<std::pair<int, int>> &pairVec);
-	void	_v_binaryInsert(std::vector<int> &mainChain, std::vector<std::pair<int, int>> &pairVec);
-	void	_v_binarySearch(std::vector<int> &mainChain, int val, size_t start, size_t end);
+	void	_v_createAChain(std::vector<int> &aChain, std::vector<std::pair<int, int>> &pairVec);
+	void	_v_createBChain(std::vector<int> &bChain, std::vector<int> &aChain, std::vector<std::pair<int, int>> &pairVec);
+	void	_v_createMainChain(std::vector<int> &aChain, std::vector<int> &bChain, std::vector<int> &mainChain);
+	void	_v_binaryInsert(std::vector<int> &aChain, std::vector<int> &bChain, std::vector<int> &mainChain);
+	void	_v_binarySearch(std::vector<int> &aChain, int val, size_t start, size_t end);
 
 	//list
 
