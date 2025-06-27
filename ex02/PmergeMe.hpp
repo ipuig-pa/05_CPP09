@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:25:11 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/06/19 16:22:27 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:18:21 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ private:
 	//utils
 	int		_checkValidNum(std::string arg);
 	int		_findNextJacobsthal(void);
+	void	_resetJacob();
 
 	//vector
 	void	_v_parse(std::vector<int> &vec, int ac, char **av);
@@ -68,27 +69,26 @@ public:
 
 	//utils
 	void	printVec();
-	void	resetJacob();
 	double	getVecTime();
 	double	getListTime();
 
 	//exceptions
 	class NonPositiveException : public std::exception{
-		public:
-			NonPositiveException();
-			NonPositiveException(std::string_view msg);
-			const char* what() const noexcept override;
-	
-		private:
-			const std::string _msg;
-		};
-	
-		class AlreadySortedException : public std::exception{
-		public:
-			AlreadySortedException(std::string_view msg);
-			const char* what() const noexcept override;
-	
-		private:
-			const std::string _msg;
-		};
+	public:
+		NonPositiveException();
+		NonPositiveException(std::string_view msg);
+		const char* what() const noexcept override;
+
+	private:
+		const std::string _msg;
+	};
+
+	class AlreadySortedException : public std::exception{
+	public:
+		AlreadySortedException(std::string_view msg);
+		const char* what() const noexcept override;
+
+	private:
+		const std::string _msg;
+	};
 };

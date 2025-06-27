@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:25:24 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/06/19 16:22:56 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:19:22 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int main(int ac, char **av)
 		<< std::setprecision(2) << pmrg.getVecTime() << " us" << std::endl;
 		//print time with list
 		std::cout << "Time to process a range of " << ac - 1 << " elements with std::list : " << std::fixed
-		<< std::setprecision(2) << pmrg.getListTime() << std::endl;
+		<< std::setprecision(2) << pmrg.getListTime() << " us" << std::endl;
 	}
 	catch (const std::exception &e)
 	{

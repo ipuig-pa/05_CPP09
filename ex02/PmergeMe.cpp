@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:25:14 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/06/19 16:43:19 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:20:48 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	PmergeMe::PmergeMeVector(int ac, char** av)
 {
 	auto start = std::chrono::high_resolution_clock::now();
 
-	_vec.reserve(ac -1);
+	_vec.reserve(ac - 1);
 	_v_parse(_vec, ac, av);
 	if (std::is_sorted(_vec.begin(), _vec.end()))
 		throw PmergeMe::AlreadySortedException("Error: sequence is already sorted");
@@ -105,7 +105,7 @@ void	PmergeMe::_v_sort(std::vector<int> &vec)
 	//insert smallest elements of each pair into the main chain
 	_v_binaryInsert(aChain, bChain, vec);
 
-	resetJacob();
+	_resetJacob();
 }
 
 void	PmergeMe::_v_createSortedPairs(std::vector<int> &vec, std::vector<std::pair<int, int>> &pairVec)
@@ -247,7 +247,7 @@ void	PmergeMe::_l_sort(std::list<int> &list)
 	//insert smallest elements of each pair into the main chain
 	_l_binaryInsert(aChain, bChain, list);
 	
-	resetJacob();
+	_resetJacob();
 }
 
 void	PmergeMe::_l_createSortedPairs(std::list<int> &list, std::list<std::pair<int, int>> &pairList)
@@ -392,6 +392,12 @@ int	PmergeMe::_findNextJacobsthal(void)
 	return (_JacobSeq[1]);
 }
 
+void	PmergeMe::_resetJacob()
+{
+	_JacobSeq[0] = 1;
+	_JacobSeq[1] = 1;
+}
+
 void	PmergeMe::printVec()
 {
 	for (size_t i = 0; i < _vec.size() - 1; ++i)
@@ -399,12 +405,6 @@ void	PmergeMe::printVec()
 		std::cout << _vec[i] << ", ";
 	}
 	std::cout << _vec[_vec.size() - 1] << std::endl;
-}
-
-void	PmergeMe::resetJacob()
-{
-	_JacobSeq[0] = 1;
-	_JacobSeq[1] = 1;
 }
 
 double	PmergeMe::getVecTime()
