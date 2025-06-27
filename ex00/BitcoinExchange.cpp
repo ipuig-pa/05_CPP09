@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 11:42:00 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2025/06/01 12:54:54 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:50:42 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,30 +112,33 @@ void	BitcoinExchange::_checkDate(std::string date)
 	if (date.length() != 10 || date[4] != '-' || date[7] != '-')
 		throw std::runtime_error("Error: bad input => " + date);
 	
+	int year, month, day;
+
 	try {
-		int year = std::stoi(date.substr(0, 4));
-		int month = std::stoi(date.substr(5, 2));
-		int day = std::stoi(date.substr(8, 2));
-		
-		if (year < 2009 || year > 2025)
-			throw std::runtime_error("Error: Invalid year => " + date);
-
-		if (month < 1 || month > 12)
-			throw std::runtime_error("Error: Invalid month => " + date);
-
-		int last_valid_day = 31;
-		if (month == 4 || month == 6 || month == 9 || month == 11)
-			last_valid_day = 30;
-		else if (month == 2 && year % 4 == 0)
-			last_valid_day = 29;
-		else if (month == 2 && year % 4 != 0)
-			last_valid_day = 28;
-		if (day < 1 || day > last_valid_day)
-			throw std::runtime_error("Error: Invalid day => " + date);
+		year = std::stoi(date.substr(0, 4));
+		month = std::stoi(date.substr(5, 2));
+		day = std::stoi(date.substr(8, 2));
 	}
+	//catch invalid argument or out of range from stoi
 	catch (const std::exception& e) {
 		throw std::runtime_error("Error: bad input => " + date);
 	}
+
+	if (year < 2009 || year > 2025)
+		throw std::runtime_error("Error: Invalid year => " + date);
+
+	if (month < 1 || month > 12)
+		throw std::runtime_error("Error: Invalid month => " + date);
+
+	int last_valid_day = 31;
+	if (month == 4 || month == 6 || month == 9 || month == 11)
+		last_valid_day = 30;
+	else if (month == 2 && year % 4 == 0)
+		last_valid_day = 29;
+	else if (month == 2 && year % 4 != 0)
+		last_valid_day = 28;
+	if (day < 1 || day > last_valid_day)
+		throw std::runtime_error("Error: Invalid day => " + date);
 }
 
 double	BitcoinExchange::_checkVal(std::string val_str)
